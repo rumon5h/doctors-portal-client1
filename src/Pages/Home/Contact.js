@@ -1,6 +1,5 @@
 import React from "react";
 import appointment from "../../assets/images/appointment.png";
-import PrimaryButton from "../Shared/PrimaryButton";
 
 const Contact = () => {
   return (
@@ -17,15 +16,19 @@ const Contact = () => {
         <input
           type="text"
           placeholder="Email address"
-          className="input input-bordered input-primary w-full max-w-xs"
+          className="input input-bordered input-primary w-full max-w-md"
         />
         <input
           type="text"
           placeholder="Subject"
-          className="input input-bordered input-primary w-full max-w-xs"
+          className="input input-bordered input-primary w-full max-w-md"
         />
-        <textarea className="textarea textarea-primary w-full max-w-xs" placeholder="Bio"></textarea>
-        <PrimaryButton>Send Message</PrimaryButton>
+        <textarea className="textarea textarea-primary w-full max-w-md" placeholder="Bio"></textarea>
+        <div className="w-full max-w-md">
+        <button className="btn w-full block bg-gradient-to-r from-secondary to-primary text-white font-bold border-none">
+            Send message
+          </button>
+        </div>
       </div>
     </div>
   );
