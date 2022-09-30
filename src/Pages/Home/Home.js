@@ -1,6 +1,7 @@
 import React from 'react';
 import MakeAppointment from '../../MakeAppointment';
 import Banner from './Banner';
+import Contact from './Contact';
 import Info from './Info';
 import Services from './Services';
 import Terms from './Terms';
@@ -15,6 +16,7 @@ const Home = () => {
             <Terms/>
             <MakeAppointment/>
             <Testimonial/>
+            <Contact/>
         </div>
     );
 };
