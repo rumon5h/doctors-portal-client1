@@ -3,6 +3,14 @@ import React from "react";
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
   const { name, slots } = treatment;
+
+  const handleBookingSubmit = (e) => {
+    e.preventDefault();
+    console.log(e);
+
+    setTreatment(null)
+
+  }
   return (
     <>
       <input type="checkbox" id="booking-modal" className="modal-toggle" />
@@ -17,6 +25,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
 
           <h3 className="font-bold text-secondary text-lg">{name}</h3>
           <form 
+          onSubmit={handleBookingSubmit}
           className="grid grid-cols-1 gap-3 mt-3 justify-items-center"
           action="">
             <input
@@ -39,7 +48,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             <input
               type="email"
               name="email"
-              placeholder="Your Email"
+              placeholder="Email Address"
               className=" input input-bordered input-accent w-full max-w-md"
             />
             <input
