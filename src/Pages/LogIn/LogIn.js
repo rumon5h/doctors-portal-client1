@@ -1,22 +1,39 @@
 import React from "react";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import {
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
+import Loading from "../Shared/Loading/Loading";
 
 const LogIn = () => {
-  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-
-  if (user) {
-    console.log(user);
-  }
-
+  const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const onSubmit = (data) => console.log(data);
 
+  const onSubmit = (data) => {
+
+    signInWithEmailAndPassword(data.email, data.password);
+  };
+
+  if (gLoading || loading) {
+    return <Loading />;
+  }
+
+  if (user) {
+    console.log(user);
+  }
+  let authenticationError;
+
+  if(gError || error){
+    authenticationError = <span className="text-red-500 text-sm">{gError?.message || error?.message}</span>
+  }
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="card w-96 bg-base-100 shadow-xl">
@@ -72,7 +89,7 @@ const LogIn = () => {
 
                   minLength: {
                     value: 6,
-                    message: "Password must be 6 length", 
+                    message: "Password must be 6 length",
                   },
                 })}
               />
@@ -89,8 +106,13 @@ const LogIn = () => {
                 )}
               </label>
             </div>
+            {authenticationError}
 
-            <input className="w-full max-w-xs btn" type="submit" value="LogIn" />
+            <input
+              className="w-full max-w-xs btn"
+              type="submit"
+              value="LogIn"
+            />
           </form>
 
           <div className="divider">OR</div>
