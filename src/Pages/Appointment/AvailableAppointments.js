@@ -6,6 +6,7 @@ import Service from './Service';
 const AvailableAppointments = ({date}) => {
     const [services, setServices] = useState([]);
     const [treatment, setTreatment] = useState(null);
+    console.log(date);
 
 
     useEffect(() => {
@@ -22,7 +23,7 @@ const AvailableAppointments = ({date}) => {
                     services.map(service => <Service key={service._id} setTreatment={setTreatment} service={service}></Service> )
                 }
             </div>
-            {treatment && <BookingModal treatment={treatment}></BookingModal>}
+            {treatment && <BookingModal date={date} setTreatment={setTreatment} treatment={treatment}></BookingModal>}
         </div>
     );
 };
