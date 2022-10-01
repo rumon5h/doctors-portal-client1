@@ -1,23 +1,19 @@
-import React from 'react';
+import React from "react";
 import {
-    useCreateUserWithEmailAndPassword,
-    useSignInWithGoogle,
-    useUpdateProfile,
-  } from "react-firebase-hooks/auth";
-  import auth from "../../firebase.init";
-  import { useForm } from "react-hook-form";
-  import Loading from "../Shared/Loading/Loading";
-  import { Link } from "react-router-dom";
+  useCreateUserWithEmailAndPassword,
+  useSignInWithGoogle,
+  useUpdateProfile,
+} from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
+import { useForm } from "react-hook-form";
+import Loading from "../Shared/Loading/Loading";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
-    const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
-    const [
-        createUserWithEmailAndPassword,
-        user,
-        loading,
-        error,
-      ] = useCreateUserWithEmailAndPassword(auth);
-      const [updateProfile, updating, uError] = useUpdateProfile(auth);
+  const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
+  const [updateProfile, updating, uError] = useUpdateProfile(auth);
   const {
     register,
     formState: { errors },
@@ -25,9 +21,8 @@ const SignUp = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-
-    createUserWithEmailAndPassword(data.email, data.password);
-    await updateProfile({displayName : data.name})
+    await createUserWithEmailAndPassword(data.email, data.password);
+    await updateProfile({ displayName: data.name });
   };
 
   if (gLoading || loading || updating) {
@@ -39,11 +34,15 @@ const SignUp = () => {
   }
   let authenticationError;
 
-  if(gError || error){
-    authenticationError = <span className="text-red-500 text-sm">{gError?.message || error?.message}</span>
+  if (gError || error) {
+    authenticationError = (
+      <span className="text-red-500 text-sm">
+        {gError?.message || error?.message}
+      </span>
+    );
   }
-    return (
-        <div className="flex justify-center items-center h-screen">
+  return (
+    <div className="flex justify-center items-center h-screen">
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="text-2xl text-center font-bold">Sign Up</h2>
@@ -61,7 +60,7 @@ const SignUp = () => {
                   required: {
                     value: true,
                     message: "Name is required",
-                  }
+                  },
                 })}
               />
               <label className="label">
@@ -145,7 +144,14 @@ const SignUp = () => {
               value="Sign Up"
             />
           </form>
-          <small><p>Already have an account? <Link className="text-primary" to="/login">Log In</Link></p></small>
+          <small>
+            <p>
+              Already have an account?{" "}
+              <Link className="text-primary" to="/login">
+                Log In
+              </Link>
+            </p>
+          </small>
 
           <div className="divider">OR</div>
           <button
@@ -157,7 +163,7 @@ const SignUp = () => {
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default SignUp;
