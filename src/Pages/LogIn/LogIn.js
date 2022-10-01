@@ -6,6 +6,7 @@ import {
 import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
 import Loading from "../Shared/Loading/Loading";
+import { Link } from "react-router-dom";
 
 const LogIn = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -38,7 +39,7 @@ const LogIn = () => {
     <div className="flex justify-center items-center h-screen">
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
-          <h2 className="text-2xl text-center font-bold">LogIn</h2>
+          <h2 className="text-2xl text-center font-bold">Log In</h2>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-control w-full max-w-xs">
@@ -111,9 +112,10 @@ const LogIn = () => {
             <input
               className="w-full max-w-xs btn"
               type="submit"
-              value="LogIn"
+              value="Log In"
             />
           </form>
+          <small><p>New to Doctors portal? <Link className="text-primary" to="/signup">Sign Up</Link></p></small>
 
           <div className="divider">OR</div>
           <button
