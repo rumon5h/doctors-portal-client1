@@ -11,4 +11,7 @@ In the project directory, you can run:
  * React router dom
  * Tailwind CSS
  * DaisyUi
- 
+ * React day picker
+ * Firebase
+ * React Firebase hook
+ * React hook form
