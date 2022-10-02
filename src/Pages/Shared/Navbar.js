@@ -3,9 +3,14 @@ import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import auth from "../../firebase.init";
+import Loading from "./Loading/Loading";
 
 const Navbar = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
+
+  if(loading){
+    return <Loading/>
+  }
 
   const logout = () => {
     signOut(auth);
@@ -29,12 +34,9 @@ const Navbar = () => {
         <Link to="/contact">Contact</Link>
       </li>
       <li>
-        {" "}
-        user.uid ?{" "}
-        <button className="btn" onClick={logout}>
-          Log out
-        </button>
-        : <Link to="/login">Login</Link>
+        {
+          user?.uid ? <button className=" bg-gradient-to-r from-secondary to-primary text-white border-none" onClick={logout}> Log out </button> : <Link className=" bg-gradient-to-r from-secondary to-primary border-none text-white" to="/login">Log In</Link>
+        }
       </li>
     </>
   );
