@@ -1,12 +1,27 @@
 import { format } from "date-fns";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
-  const { name, slots } = treatment;
-
+  const [user, loading] = useAuthState(auth);
+  const { _id, name, slots } = treatment;
+  const formattedDate = format(date, 'PP')
   const handleBookingSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
+    const slot = e.target.slot.value;
+    const phone = e.target.number.value;
+
+    const booking = {
+      treatmentId : _id,
+      treatment : name,
+      date: formattedDate,
+      slot : slot,
+      patientName : user.displayName,
+      patientEmail : user.email,
+      phone : phone
+    }
+    console.log(booking);
 
     setTreatment(null)
 
@@ -34,25 +49,28 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
               disabled
               className=" input input-bordered input-accent w-full max-w-md"
             />
-            <select className="select select-bordered w-full max-w-md">
+            <select name="slot" className="select select-bordered w-full max-w-md">
               {
-                slots.map(slot => <option name="slot" value={slot}>{slot}</option> )
+                slots.map((slot, index) => <option key={index}  value={slot}>{slot}</option> )
               }
             </select>
             <input
               type="text"
-              placeholder="Your name"
+              disabled
+              value={user?.displayName}
               name="name"
               className=" input input-bordered input-accent w-full max-w-md"
             />
             <input
               type="email"
               name="email"
-              placeholder="Email Address"
+              disabled
+              value={user?.email}
               className=" input input-bordered input-accent w-full max-w-md"
             />
             <input
               type="number"
+              required
               name="number"
               placeholder="Your Number"
               className=" input input-bordered input-accent w-full max-w-md"

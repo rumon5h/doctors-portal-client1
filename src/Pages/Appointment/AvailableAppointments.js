@@ -6,7 +6,6 @@ import Service from './Service';
 const AvailableAppointments = ({date}) => {
     const [services, setServices] = useState([]);
     const [treatment, setTreatment] = useState(null);
-    console.log(date);
 
 
     useEffect(() => {
