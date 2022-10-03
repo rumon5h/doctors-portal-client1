@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  useSendPasswordResetEmail,
   useSignInWithEmailAndPassword,
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
@@ -9,6 +10,7 @@ import Loading from "../Shared/Loading/Loading";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const LogIn = () => {
+  
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
@@ -17,6 +19,10 @@ const LogIn = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const [sendPasswordResetEmail, sending, rpError] =
+    useSendPasswordResetEmail(auth);
+
+  
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,11 +30,10 @@ const LogIn = () => {
   const from = location.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
-
     signInWithEmailAndPassword(data.email, data.password);
   };
 
-  if (gLoading || loading) {
+  if (gLoading || loading || sending) {
     return <Loading />;
   }
 
@@ -38,8 +43,20 @@ const LogIn = () => {
 
   let authenticationError;
 
-  if(gError || error){
-    authenticationError = <span className="text-red-500 text-sm">{gError?.message || error?.message}</span>
+  if (gError || error || rpError) {
+    authenticationError = (
+      <span className="text-red-500 my-2 block text-sm">
+        {gError?.message || error?.message || rpError?.message}
+      </span>
+    );
+  }
+
+  const handleForgatePasswordEvent = () => {
+    const email = document.getElementById('email-input').value;
+    if(email){
+      sendPasswordResetEmail(email);
+    }
+
   }
   return (
     <div className="flex justify-center items-center h-screen">
@@ -53,6 +70,7 @@ const LogIn = () => {
                 <span className="label-text">Email</span>
               </label>
               <input
+              id="email-input"
                 type="email"
                 placeholder="Your email"
                 className="input input-bordered w-full max-w-xs"
@@ -80,6 +98,7 @@ const LogIn = () => {
                 )}
               </label>
             </div>
+            
             <div className="form-control w-full max-w-xs">
               <label className="label">
                 <span className="label-text">Password</span>
@@ -113,6 +132,14 @@ const LogIn = () => {
                 )}
               </label>
             </div>
+
+            <button
+            className="hover:text-red-500 mb-3 block"
+              onClick={handleForgatePasswordEvent}
+            >
+              Reset password
+            </button>
+
             {authenticationError}
 
             <input
@@ -121,7 +148,14 @@ const LogIn = () => {
               value="Log In"
             />
           </form>
-          <small><p>New to Doctors portal? <Link className="text-primary" to="/signup">Sign Up</Link></p></small>
+          <small>
+            <p>
+              New to Doctors portal?{" "}
+              <Link className="text-primary" to="/signup">
+                Sign Up
+              </Link>
+            </p>
+          </small>
 
           <div className="divider">OR</div>
           <button
