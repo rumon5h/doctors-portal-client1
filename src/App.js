@@ -8,6 +8,8 @@ import LogIn from './Pages/LogIn/LogIn';
 import PrivateRoute from './Pages/PrivateRoute/PrivateRoute';
 import Navbar from './Pages/Shared/Navbar';
 import SignUp from './Pages/SignUp/SignUp';
+import { ToastContainer } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
         <Route path='login' element={<LogIn></LogIn>}></Route>
         <Route path='signup' element={<SignUp></SignUp>}></Route>
       </Routes>
+      <ToastContainer></ToastContainer>
     </div>
   );
 }
