@@ -8,17 +8,41 @@ const MyAppointments = () => {
 
   useEffect(() => {
     if (user) {
-      fetch(`http://localhost:5000/booking`)
+      fetch(`http://localhost:5000/booking?patient=${user.email}`)
         .then((res) => res.json())
         .then((data) => {
-            setAppointments(data);
-            console.log(data);
+          setAppointments(data);
+          console.log(data);
         });
     }
   }, [user]);
   return (
     <div>
       <h2>My Appointments{appointments.length}</h2>
+      <div className="overflow-x-auto">
+        <table className="table w-full">
+          {/* <!-- head --> */}
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Treatment</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+                appointments.map(a => <tr key={a._id}>
+                    <th>{a.patientName}</th>
+                    <td>{a.date}</td>
+                    <td>{a.slot}</td>
+                    <td>{a.treatment}</td>
+                  </tr>
+                )
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
