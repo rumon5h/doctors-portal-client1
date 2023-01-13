@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
@@ -31,14 +31,19 @@ const SignUp = () => {
     await updateProfile({ displayName: data.name });
   };
 
+  useEffect(() => {
+
+  if (user || gUser) {
+    navigate(from, { replace: true });
+  }
+  },[user, gUser, navigate, from]);
+  
+
   if (gLoading || loading || updating) {
     return <Loading />;
   }
 
   
-  if (user || gUser) {
-    navigate(from, { replace: true });
-  }
 
   let authenticationError;
 

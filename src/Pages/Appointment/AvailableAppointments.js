@@ -18,9 +18,7 @@ const AvailableAppointments = ({ date }) => {
      )
    );
 
-   if(error){
-    toast.error(error?.message);
-   }
+   
 
   if(isLoading){
     return <Loading/>
