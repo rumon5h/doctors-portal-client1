@@ -10,10 +10,11 @@ import Navbar from './Pages/Shared/Navbar';
 import SignUp from './Pages/SignUp/SignUp';
 import { ToastContainer } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+import Dashboard from './Pages/Dashboard/Dashboard';
 
 function App() {
   return (
-    <div className='max-w-7xl mx-auto'>
+    <div className='max-w-[1400px] mx-auto'>
       <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>}></Route>
@@ -22,6 +23,11 @@ function App() {
         <Route path='appointment' element={
           <PrivateRoute>
             <Appointment></Appointment>
+          </PrivateRoute>
+        }></Route>
+        <Route path='dashboard' element={
+          <PrivateRoute>
+            <Dashboard></Dashboard>
           </PrivateRoute>
         }></Route>
         <Route path='login' element={<LogIn></LogIn>}></Route>

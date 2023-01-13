@@ -8,8 +8,8 @@ import Loading from "./Loading/Loading";
 const Navbar = () => {
   const [user, loading] = useAuthState(auth);
 
-  if(loading){
-    return <Loading/>
+  if (loading) {
+    return <Loading />;
   }
 
   const logout = () => {
@@ -33,11 +33,32 @@ const Navbar = () => {
       <li>
         <Link to="/contact">Contact</Link>
       </li>
-      <li>
-        {
-          user?.uid ? <button className=" bg-gradient-to-r from-secondary to-primary text-white border-none" onClick={logout}> Log out </button> : <Link className=" bg-gradient-to-r from-secondary to-primary border-none text-white" to="/login">Log In</Link>
-        }
-      </li>
+      {user?.uid && (
+        <li>
+          {" "}
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
+      )}
+
+      {user?.uid ? (
+        <li>
+          <button
+            className=" bg-gradient-to-r from-secondary to-primary text-white border-none"
+            onClick={logout}
+          >
+            Log out
+          </button>
+        </li>
+      ) : (
+        <li>
+          <Link
+            className=" bg-gradient-to-r from-secondary to-primary border-none text-white"
+            to="/login"
+          >
+            Log In
+          </Link>
+        </li>
+      )}
     </>
   );
   return (

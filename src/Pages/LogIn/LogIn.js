@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   useSendPasswordResetEmail,
   useSignInWithEmailAndPassword,
@@ -33,13 +33,18 @@ const LogIn = () => {
     signInWithEmailAndPassword(data.email, data.password);
   };
 
-  if (gLoading || loading || sending) {
-    return <Loading />;
-  }
+  useEffect(() => {
 
   if (user || gUser) {
     navigate(from, { replace: true });
   }
+  },[user, gUser, navigate, from]);
+  
+  if (gLoading || loading || sending) {
+    return <Loading />;
+  }
+
+
 
   let authenticationError;
 
