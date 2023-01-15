@@ -24,6 +24,7 @@ const MyAppointments = () => {
           {/* <!-- head --> */}
           <thead>
             <tr>
+              <th></th>
               <th>Name</th>
               <th>Date</th>
               <th>Time</th>
@@ -32,7 +33,8 @@ const MyAppointments = () => {
           </thead>
           <tbody>
             {
-                appointments.map(a => <tr key={a._id}>
+                appointments.map((a,index) => <tr key={a._id}>
+                  <th>{index+1}</th>
                     <th>{a.patientName}</th>
                     <td>{a.date}</td>
                     <td>{a.slot}</td>
