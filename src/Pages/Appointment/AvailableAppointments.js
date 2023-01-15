@@ -12,6 +12,8 @@ const AvailableAppointments = ({ date }) => {
 
   const formattedDate = format(date, "PP");
 
+  // https://doctor-z29n.onrender.com
+
   const { isLoading, error, data: services, refetch } = useQuery(['available', formattedDate], () =>
      fetch(`http://localhost:5000/available?date=${formattedDate}`).then(res =>
        res.json()
