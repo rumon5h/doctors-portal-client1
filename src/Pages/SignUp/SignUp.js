@@ -34,10 +34,10 @@ const SignUp = () => {
 
   useEffect(() => {
 
-  if (user || gUser) {
+  if (token) {
     navigate(from, { replace: true });
   }
-  },[user, gUser, navigate, from]);
+  },[token, navigate, from]);
   
 
   if (gLoading || loading || updating) {

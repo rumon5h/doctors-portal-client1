@@ -1,15 +1,30 @@
+import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 
 const MyAppointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [user] = useAuthState(auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
-      fetch(`http://localhost:5000/booking?patient=${user.email}`)
-        .then((res) => res.json())
+      fetch(`http://localhost:5000/booking?patient=${user.email}`, {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      })
+        .then((res) => {
+          if (res.status === 401 || res.status === 403) {
+            signOut(auth);
+            localStorage.removeItem("access_token");
+            navigate("/");
+          }
+          return res.json();
+        })
         .then((data) => {
           setAppointments(data);
           console.log(data);
@@ -32,16 +47,15 @@ const MyAppointments = () => {
             </tr>
           </thead>
           <tbody>
-            {
-                appointments.map((a,index) => <tr key={a._id}>
-                  <th>{index+1}</th>
-                    <th>{a.patientName}</th>
-                    <td>{a.date}</td>
-                    <td>{a.slot}</td>
-                    <td>{a.treatment}</td>
-                  </tr>
-                )
-            }
+            {appointments.map((a, index) => (
+              <tr key={a._id}>
+                <th>{index + 1}</th>
+                <th>{a.patientName}</th>
+                <td>{a.date}</td>
+                <td>{a.slot}</td>
+                <td>{a.treatment}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
