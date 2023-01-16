@@ -14,6 +14,7 @@ const Navbar = () => {
 
   const logout = () => {
     signOut(auth);
+    localStorage.removeItem('access_token')
   };
 
   const menuItems = (
