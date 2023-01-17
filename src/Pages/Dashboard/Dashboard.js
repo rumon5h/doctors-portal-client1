@@ -32,9 +32,11 @@ const Dashboard = () => {
             <Link to="/dashboard/history">My History</Link>
           </li>
 
-          <li>
+          {
+            admin && <li>
             <Link to="/dashboard/users">All Users</Link>
           </li>
+          }
         </ul>
       </div>
     </div>
