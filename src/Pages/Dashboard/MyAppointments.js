@@ -27,10 +27,10 @@ const MyAppointments = () => {
         })
         .then((data) => {
           setAppointments(data);
-          console.log(data);
         });
     }
-  }, [user]);
+  }, [user,navigate]);
+  
   return (
     <div>
       <h2>My Appointments{appointments.length}</h2>
