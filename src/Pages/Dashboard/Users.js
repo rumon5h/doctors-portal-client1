@@ -5,7 +5,7 @@ import UserRow from "./UserRow";
 
 export const Users = () => {
   const { data: users, isLoading, refetch } = useQuery("users", () =>
-    fetch(`http://localhost:5000/user`, {
+    fetch(`https://doctor-z29n.onrender.com/user`, {
         method: "GET", 
         headers:{
             authorization: `Bearer ${localStorage.getItem("access_token")}`
